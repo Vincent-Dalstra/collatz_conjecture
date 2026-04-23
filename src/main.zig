@@ -3,6 +3,7 @@ const collatz = @import("collatz_conjecture");
 
 const UP_TO_NUM = 1000;
 
+var stdout: *std.io.Writer = undefined;
 var done_map: std.AutoHashMap(u64, void) = undefined;
 
 var todo: std.AutoHashMap(u64, void) = undefined;
@@ -19,7 +20,8 @@ pub fn main() !void {
 
     const stdout_buf: []u8 = try aalloc.alloc(u8, (16 * 1024));
     var stdout_writer = std.fs.File.stdout().writer(stdout_buf);
-    const stdout: *std.io.Writer = &stdout_writer.interface;
+    // const stdout: *std.io.Writer = &stdout_writer.interface;
+    stdout = &stdout_writer.interface;
 
     done_map = .init(aalloc);
     defer done_map.deinit();
